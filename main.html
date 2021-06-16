@@ -1,0 +1,54 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8" />
+    <title>Platformer</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+    <script type="text/javascript" src= "Menu.js"></script>
+    <script type="text/javascript" src= "Stage1.js"></script>
+    <script type="text/javascript" src= "Stage2.js"></script>
+
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+var playerHp = 3;
+var mana = 5;
+var direction = "right";
+var attack = false;
+var jumping = false;
+var jump = 1;
+var onIce = false;
+var timerGlace = 0;
+
+var inputP = [false, false, false, false, false]; //Right, Left, Down, Up, Space/X
+var xAxis = 0;  //Stick xAxys
+var yAxis = 0;  //Stick xAxys
+
+var config = {
+    type: Phaser.AUTO,
+    width: 3040,
+    height: 920,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 500 },
+            debug: false
+        }
+    },
+    input: {gamepad:true},
+    scene: [Menu, Stage1, Stage2]
+};
+
+var game = new Phaser.Game(config);
+
+</script>
+
+</body>
+</html>
