@@ -2,7 +2,6 @@ class EnnemiPoire extends Phaser.GameObjects.Sprite{
     constructor(scene, x, y, image){
         super(scene, x, y, image);
 
-        this.anims.play('poire', true);
 
         scene.add.existing(this);
         scene.ennemis.add(this);
@@ -12,12 +11,25 @@ class EnnemiPoire extends Phaser.GameObjects.Sprite{
         
         if(player.body.x < this.body.x){
             this.flipX = false;
-            this.body.setAccelerationX(-150);
         }
 
         else if(player.body.x > this.body.x){
             this.flipX = true;
+        }
+
+        if(player.body.x < this.body.x && Math.abs(player.body.x-this.body.x) < 300){
+            this.anims.play('poireRun', true);
+            this.body.setAccelerationX(-150);
+        }
+
+        else if(player.body.x > this.body.x && Math.abs(player.body.x-this.body.x) < 300){
+            this.anims.play('poireRun', true);
             this.body.setAccelerationX(150);
+        }
+
+        else{
+            this.anims.play('poireIdle', true);
+
         }
 
         if(this.body.velocity.x > 100){

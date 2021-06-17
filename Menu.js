@@ -8,12 +8,14 @@ class Menu extends Phaser.Scene {
         this.load.atlas("player", "asset/Poti.png","asset/Poti.json")
         this.load.atlas("cerise", "asset/Cerise.png","asset/Cerise.json")
         this.load.atlas("poire", "asset/Poire.png","asset/Poire.json")
+        this.load.atlas("glace", "asset/Glace.png","asset/Glace.json")
 
         this.load.spritesheet("manaBar", "asset/mana_bar.png", { frameWidth: 75, frameHeight: 158 })
         this.load.spritesheet("lifeBar", "asset/life_bar.png", { frameWidth: 90, frameHeight: 154 })
         this.load.image("energy", "asset/energy.png")
         this.load.image("life", "asset/life.png")
         this.load.image("attack", "asset/attack.png")
+        this.load.image("projectile", "asset/Projectile.png")
 
         //Tiled
         this.load.image("tileset", "tiled/Tileset.png");
@@ -85,15 +87,51 @@ class Menu extends Phaser.Scene {
         });
 
         this.anims.create({
-            key: 'poire',
+            key: 'poireIdle',
             frames: this.anims.generateFrameNames('poire', {
                 prefix: 'Poire',
                 start: 1,
+                end: 2,
+                zeroPad: 1
+            }),
+            frameRate: 10,
+            repeat: -1,
+        });
+
+        this.anims.create({
+            key: 'poireRun',
+            frames: this.anims.generateFrameNames('poire', {
+                prefix: 'Poire',
+                start: 3,
                 end: 6,
                 zeroPad: 1
             }),
             frameRate: 10,
             repeat: -1,
+        });
+
+        this.anims.create({
+            key: 'glace',
+            frames: this.anims.generateFrameNames('glace', {
+                prefix: 'Glace',
+                start: 1,
+                end: 2,
+                zeroPad: 1
+            }),
+            frameRate: 2,
+            repeat: -1,
+        });
+
+        this.anims.create({
+            key: 'glaceAttack',
+            frames: this.anims.generateFrameNames('glace', {
+                prefix: 'GlaceAttaque',
+                start: 1,
+                end: 1,
+                zeroPad: 1
+            }),
+            frameRate: 1,
+            repeat: 0,
         });
         
         this.scene.start('stage1')

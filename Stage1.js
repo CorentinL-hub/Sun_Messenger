@@ -46,6 +46,17 @@ class Stage1 extends Phaser.Scene {
         new EnnemiPoire(this, 2100, 500, 'poire');
         new EnnemiPoire(this, 2500, 500, 'poire');
         
+        this.ennemiGlace = this.physics.add.group();
+
+        this.glace1 = new EnnemiGlace(this, 2100, 200, 'glace');
+        this.glace1.body.setSize(63, 50).setOffset(30, 40);
+        this.glace1.body.setAllowGravity(false)
+
+        this.glace2 = new EnnemiGlace(this, 2500, 300, 'glace');
+        this.glace2.body.setSize(63, 50).setOffset(30, 40);
+        this.glace2.body.setAllowGravity(false)
+
+        this.projectiles = this.physics.add.group();
 
         //Creation of player
         this.player = this.physics.add.sprite(2750, 700, "player").setSize(12, 48).setOffset(16,20);
@@ -67,6 +78,7 @@ class Stage1 extends Phaser.Scene {
 
         //Ennemi
         this.physics.add.collider(this.ennemis, this.collision);
+        this.physics.add.collider(this.projectiles, this.collision, this.destroy, null, this);
 
         //Tilemap
         this.collision.setCollisionByProperty({collides:true});
@@ -291,8 +303,26 @@ class Stage1 extends Phaser.Scene {
 
         //Monster's IA
         for(var i = 0; i < this.ennemis.getChildren().length; i++){
-            var ennemis = this.ennemis.getChildren()[i];
+            let ennemis = this.ennemis.getChildren()[i];
             ennemis.ia(this.player);
+        }
+
+        for(var i = 0; i < this.ennemiGlace.getChildren().length; i++){
+            let ennemis = this.ennemiGlace.getChildren()[i];
+            if(ennemis.ia(this.player)){
+                this.projectiles.create(ennemis.x, ennemis.y+40, 'projectile')
+            }
+        }
+
+        for(var i = 0; i < this.projectiles.getChildren().length; i++){
+            let projectile = this.projectiles.getChildren()[i];
+
+            let radian = Math.atan2(this.player.body.y - projectile.body.y, this.player.body.x - projectile.body.x);
+            let angle =  Math.atan2(0 - projectile.body.velocity.y, 1 - projectile.body.velocity.x) * 180/Math.PI;
+
+            projectile.setVelocityX(Math.cos(radian)*125)
+            projectile.setVelocityY(200)
+            .setAngle(angle-10);
         }
 
     }
@@ -309,6 +339,10 @@ class Stage1 extends Phaser.Scene {
             playerHp++;
         }
         life.destroy();
+    }
+
+    destroy(projectile, ground){
+        projectile.destroy();
     }
     
 }
