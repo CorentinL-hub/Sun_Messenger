@@ -7,6 +7,8 @@
     <script type="text/javascript" src= "Menu.js"></script>
     <script type="text/javascript" src= "Stage1.js"></script>
     <script type="text/javascript" src= "Stage2.js"></script>
+    <script type="text/javascript" src= "EnnemiCerise.js"></script>
+    <script type="text/javascript" src= "EnnemiPoire.js"></script>
 
     <style type="text/css">
         body {
@@ -21,13 +23,14 @@
 var playerHp = 3;
 var mana = 5;
 var direction = "right";
+var keyPush = "N/A";
 var attack = false;
 var jumping = false;
 var jump = 1;
 var onIce = false;
 var timerGlace = 0;
 
-var inputP = [false, false, false, false, false]; //Right, Left, Down, Up, Space/X
+var inputP = [false, false, false, false, false, false]; //Right, Left, Down, Up, Space/B, A/Y
 var xAxis = 0;  //Stick xAxys
 var yAxis = 0;  //Stick xAxys
 
@@ -39,7 +42,7 @@ var config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 500 },
-            debug: false
+            debug: true
         }
     },
     input: {gamepad:true},
