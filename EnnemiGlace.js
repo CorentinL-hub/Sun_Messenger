@@ -49,7 +49,7 @@ class EnnemiGlace extends Phaser.GameObjects.Sprite{
         if (this.direction == "left"){
             this.timer++;
             this.body.setVelocityX(-100);
-            if (this.timer >= 240){
+            if (this.timer >= 360){
                 this.direction = "right";
             }
         }

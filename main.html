@@ -23,6 +23,7 @@
 
 var playerHp = 3;
 var mana = 5;
+var invulnerable = false;
 var direction = "right";
 var keyPush = "N/A";
 var attack = false;
@@ -43,7 +44,7 @@ var config = {
         default: 'arcade',
         arcade: {
             gravity: { y: 500 },
-            debug: false
+            debug: true
         }
     },
     input: {gamepad:true},

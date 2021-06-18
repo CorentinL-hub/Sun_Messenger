@@ -26,40 +26,36 @@ class Stage1 extends Phaser.Scene {
 
         this.manaBar = this.add.sprite(50, 300, "manaBar").setScrollFactor(0);
         this.lifeBar = this.add.sprite(50, 100, "lifeBar").setScrollFactor(0);
+        this.legumeCounter = this.add.sprite(1500, 100, "legumeCounter").setScrollFactor(0);
 
         this.energy = this.physics.add.group();
-        this.energies = this.energy.create(100, 700, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(624, 725, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(688, 690, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(945, 784, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1489, 688, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1650, 720, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1808, 624, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1968, 720, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(2640, 720, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(2800, 624, 'energy').body.setAllowGravity(false);
         
-        this.life = this.physics.add.group();
-        this.lifes = this.life.create(200, 700, 'life').body.setAllowGravity(false);
-        this.lifes = this.life.create(200, 800, 'life').body.setAllowGravity(false);
-        this.lifes = this.life.create(300, 700, 'life').body.setAllowGravity(false);
 
+        this.life = this.physics.add.group();
+        this.lifes = this.life.create(1248, 695, 'life').body.setAllowGravity(false);
+        this.lifes = this.life.create(1818, 820, 'life').body.setAllowGravity(false);
+        this.lifes = this.life.create(2736, 688, 'life').body.setAllowGravity(false);
+
+        this.legume = this.physics.add.image(3000, 490, 'legume');
+        
         //Creation of ennemis
         this.ennemis = this.physics.add.group();
-        this.cerise1 = new EnnemiCerise(this, 2100, 500, 'cerise');
+        this.cerise1 = new EnnemiCerise(this, 2250, 500, 'cerise');
         this.cerise1.body.setSize(63, 50).setOffset(0, 20);
 
-        this.cerise2 = new EnnemiCerise(this, 2500, 500, 'cerise');
-        this.cerise2.body.setSize(63, 50).setOffset(0, 20);
-
-        new EnnemiPoire(this, 2100, 500, 'poire');
-        new EnnemiPoire(this, 2500, 500, 'poire');
-        
-        this.ennemiGlace = this.physics.add.group();
-
-        this.glace1 = new EnnemiGlace(this, 2100, 200, 'glace');
-        this.glace1.body.setSize(63, 50).setOffset(30, 40);
-        this.glace1.body.setAllowGravity(false)
-
-        this.glace2 = new EnnemiGlace(this, 2500, 300, 'glace');
-        this.glace2.body.setSize(63, 50).setOffset(30, 40);
-        this.glace2.body.setAllowGravity(false)
-
-        this.projectiles = this.physics.add.group();
+        new EnnemiPoire(this, 1850, 800, 'poire');
 
         //Creation of player
-        this.player = this.physics.add.sprite(2750, 700, "player").setSize(12, 48).setOffset(16,20);
+        this.player = this.physics.add.sprite(100, 790, "player").setSize(12, 48).setOffset(16,20);
         this.player.setCollideWorldBounds(true);
         this.playerSpeedX = 150;
         this.playerSpeedY = 320;
@@ -71,14 +67,16 @@ class Stage1 extends Phaser.Scene {
         //Player
         this.physics.add.overlap(this.player, this.energy, this.getEnergy, null, this);
         this.physics.add.overlap(this.player, this.life, this.getLife, null, this);
-        this.physics.add.overlap(this.player, this.ennemis);
+        this.physics.add.collider(this.player, this.legume, this.getLegume, null, this);
+        this.physics.add.overlap(this.player, this.ennemis, this.hitEnnemi, null, this);
         this.physics.add.collider(this.player, this.collision);
         this.physics.add.collider(this.player, this.door);
         this.physics.add.collider(this.hitbox, this.door);
 
         //Ennemi
         this.physics.add.collider(this.ennemis, this.collision);
-        this.physics.add.collider(this.projectiles, this.collision, this.destroy, null, this);
+        this.physics.add.collider(this.legume, this.collision);
+        
 
         //Tilemap
         this.collision.setCollisionByProperty({collides:true});
@@ -102,6 +100,7 @@ class Stage1 extends Phaser.Scene {
 
         this.collision.setTileLocationCallback(94, 18, 1, 2, ()=>{
             this.scene.start('stage2');
+            invulnerable = false;
 
         });
 
@@ -111,14 +110,9 @@ class Stage1 extends Phaser.Scene {
                 this.door.removeTileAt(93, 19);
             }
         });
-
-        this.player.anims.play('face', true)
-        this.textJumping = this.add.text(16, 16, 'Jumping : ' + playerHp, { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
     }
 
     update(){
-        this.textJumping.setText('PlayerHp : ' + attack);
-
         let pad = Phaser.Input.Gamepad.Gamepad;
 
     
@@ -135,6 +129,7 @@ class Stage1 extends Phaser.Scene {
             playerHp = 3;}, callbackScope: this});
         }
         
+
         //Logic
 
         //Position de l'attaque
@@ -307,23 +302,6 @@ class Stage1 extends Phaser.Scene {
             ennemis.ia(this.player);
         }
 
-        for(var i = 0; i < this.ennemiGlace.getChildren().length; i++){
-            let ennemis = this.ennemiGlace.getChildren()[i];
-            if(ennemis.ia(this.player)){
-                this.projectiles.create(ennemis.x, ennemis.y+40, 'projectile')
-            }
-        }
-
-        for(var i = 0; i < this.projectiles.getChildren().length; i++){
-            let projectile = this.projectiles.getChildren()[i];
-
-            let radian = Math.atan2(this.player.body.y - projectile.body.y, this.player.body.x - projectile.body.x);
-            let angle =  Math.atan2(0 - projectile.body.velocity.y, 1 - projectile.body.velocity.x) * 180/Math.PI;
-
-            projectile.setVelocityX(Math.cos(radian)*125)
-            projectile.setVelocityY(200)
-            .setAngle(angle-10);
-        }
 
     }
 
@@ -337,12 +315,33 @@ class Stage1 extends Phaser.Scene {
     getLife(player, life){
         if (playerHp < 3){
             playerHp++;
+            life.destroy();
         }
-        life.destroy();
     }
 
-    destroy(projectile, ground){
+    getLegume(player, legume){
+        legume.destroy();
+        this.legumeCounter.setFrame(1);
+    }
+
+
+    destroy(projectile, other){
         projectile.destroy();
     }
-    
+
+    hitEnnemi(player, ennemis){
+        if(!invulnerable)   // Si le joueur n'est pas invulnerable
+        {
+            playerHp --;                    // Le joueur perd un pv
+            invulnerable = true;            // Il deviens invulnerable
+            this.timer = this.time.addEvent({ delay: 2000, callback: function(){invulnerable = false;}, callbackScope: this});  // Le joueur n'est plus invulnerable après 2000ms
+
+            if (playerHp > 0){  // Si le joueur est encore en vie après s'être pris le coup
+                this.time.addEvent({ delay: 200, repeat: 9, callback: function(){player.visible = !player.visible;}, callbackScope: this}); // Le joueur passe de visible a non visible toutes les 200ms 9 fois de suite
+            }
+
+        }
+    }
+
+  
 }

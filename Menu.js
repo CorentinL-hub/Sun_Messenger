@@ -12,8 +12,10 @@ class Menu extends Phaser.Scene {
 
         this.load.spritesheet("manaBar", "asset/mana_bar.png", { frameWidth: 75, frameHeight: 158 })
         this.load.spritesheet("lifeBar", "asset/life_bar.png", { frameWidth: 90, frameHeight: 154 })
+        this.load.spritesheet("legumeCounter", "asset/legumeCounter.png", { frameWidth: 171, frameHeight: 95 })
         this.load.image("energy", "asset/energy.png")
         this.load.image("life", "asset/life.png")
+        this.load.image("legume", "asset/legume.png")
         this.load.image("attack", "asset/attack.png")
         this.load.image("projectile", "asset/Projectile.png")
 
@@ -134,7 +136,7 @@ class Menu extends Phaser.Scene {
             repeat: 0,
         });
         
-        this.scene.start('stage1')
+        this.scene.start('stage2')
     }
 
     update(){

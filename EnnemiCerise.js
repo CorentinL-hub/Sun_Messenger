@@ -19,9 +19,9 @@ class EnnemiCerise extends Phaser.GameObjects.Sprite{
             this.flipX = true;
         }
 
-        if(player.body.velocity.y < 0 && player.body.y < this.body.y && !this.saut && Math.abs(player.body.x-this.body.x) < 300){
+        if(player.body.velocity.y < 0 && player.body.y < this.body.y && !this.saut && Math.abs(player.body.x-this.body.x) < 200){
             this.saut = true;
-            this.body.setVelocityY(-200);
+            this.body.setVelocityY(-175);
         }
 
         if(this.body.velocity.y == 0){

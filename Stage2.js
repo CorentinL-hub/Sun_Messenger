@@ -23,12 +23,45 @@ class Stage2 extends Phaser.Scene {
         this.collision = this.map.createLayer("collision", this.tileset, 0, 0);
 
         this.manaBar = this.add.sprite(50, 300, "manaBar").setScrollFactor(0);
-
         this.lifeBar = this.add.sprite(50, 100, "lifeBar").setScrollFactor(0);
+        this.legumeCounter = this.add.sprite(1500, 100, "legumeCounter").setScrollFactor(0);
 
-        this.player = this.physics.add.sprite(50, 800, "player").setSize(12, 48).setOffset(16,20);
+        this.energy = this.physics.add.group();
+        this.energies = this.energy.create(460, 784, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(550, 624, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(640, 784, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(730, 624, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(820, 784, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1070, 560, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1170, 592, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1390, 784, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1560, 784, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1930, 700, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(2090, 700, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(2450, 784, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(2630, 784, 'energy').body.setAllowGravity(false);
+
+        this.life = this.physics.add.group();
+        this.lifes = this.life.create(640, 550, 'life').body.setAllowGravity(false);
+        this.lifes = this.life.create(1360, 368, 'life').body.setAllowGravity(false);
+        this.lifes = this.life.create(2540, 700, 'life').body.setAllowGravity(false);
+
+        this.legume = this.physics.add.image(1650, 260, 'legume');
+
+        this.ennemiGlace = this.physics.add.group();
+
+        this.glace1 = new EnnemiGlace(this, 850, 200, 'glace');
+        this.glace1.body.setSize(63, 50).setOffset(30, 40);
+        this.glace1.body.setAllowGravity(false)
+
+        this.glace2 = new EnnemiGlace(this, 2500, 300, 'glace');
+        this.glace2.body.setSize(63, 50).setOffset(30, 40);
+        this.glace2.body.setAllowGravity(false)
+
+        this.projectiles = this.physics.add.group();
+
+        this.player = this.physics.add.sprite(2430, 700, "player").setSize(12, 48).setOffset(16,20);
         this.player.setCollideWorldBounds(true);
-
         this.playerSpeedX = 150;
         this.playerSpeedY = 320;
 
@@ -36,6 +69,15 @@ class Stage2 extends Phaser.Scene {
         this.hitbox.body.setAllowGravity(false);
 
         this.physics.add.collider(this.player, this.collision);
+        this.physics.add.overlap(this.player, this.life, this.getLife, null, this);
+        this.physics.add.overlap(this.player, this.energy, this.getEnergy, null, this);
+        this.physics.add.collider(this.player, this.legume, this.getLegume, null, this);
+        this.physics.add.overlap(this.player, this.projectiles, this.hitProjectile, null, this);
+
+        
+        this.physics.add.collider(this.ennemiGlace, this.collision);
+        this.physics.add.collider(this.legume, this.collision);
+        this.physics.add.collider(this.projectiles, this.collision, this.destroy, null, this);
         this.collision.setCollisionByProperty({collides:true});
 
         this.camera = this.cameras.main.setSize(1600,900);
@@ -55,7 +97,7 @@ class Stage2 extends Phaser.Scene {
         }, this);
 
         this.collision.setTileLocationCallback(94, 23, 1, 2, ()=>{
-            this.scene.start('stage1');
+            this.scene.start('stage3');
         });
 
         this.collision.setTileIndexCallback([47, 53],()=>{
@@ -71,7 +113,7 @@ class Stage2 extends Phaser.Scene {
     }
 
     update(){
-        this.textJumping.setText('PlayerHp : ' + inputP[4]);
+        this.textJumping.setText('X : ' + this.player.body.x + ' Y : ' + this.player.body.y);
 
         let pad = Phaser.Input.Gamepad.Gamepad;
     
@@ -86,6 +128,7 @@ class Stage2 extends Phaser.Scene {
             this.player.visible = false;
             this.time.addEvent({ delay: 250, callback: function(){this.scene.start('stage2')
             playerHp = 3;}, callbackScope: this});
+            invulnerable = false;
         }
 
         if (timerGlace > 0){
@@ -303,6 +346,79 @@ class Stage2 extends Phaser.Scene {
             this.manaBar.setFrame(0)
         }
 
+        for(var i = 0; i < this.ennemiGlace.getChildren().length; i++){
+            let ennemis = this.ennemiGlace.getChildren()[i];
+            if(ennemis.ia(this.player)){
+                this.projectiles.create(ennemis.x, ennemis.y+40, 'projectile')
+            }
+        }
+
+        for(var i = 0; i < this.projectiles.getChildren().length; i++){
+            let projectile = this.projectiles.getChildren()[i];
+
+            let radian = Math.atan2(this.player.body.y - projectile.body.y, this.player.body.x - projectile.body.x);
+            let angle =  Math.atan2(0 - projectile.body.velocity.y, 1 - projectile.body.velocity.x) * 180/Math.PI;
+
+            projectile.setVelocityX(Math.cos(radian)*150)
+            projectile.setVelocityY(200)
+            .setAngle(angle-10);
+
+            if(projectile.body.y > 835){
+                projectile.destroy();
+            }
+        }
+
+    }
+
+    getEnergy(player, energy){
+        if(mana<5){
+            energy.destroy();
+            mana++;
+        }
+    }
+
+    getLife(player, life){
+        if (playerHp < 3){
+            playerHp++;
+            life.destroy();
+        }
+    }
+
+    getLegume(player, legume){
+        legume.destroy();
+        this.legumeCounter.setFrame(1);
+    }
+
+    destroy(projectile, other){
+        projectile.destroy();
+    }
+
+    hitEnnemi(player, ennemis){
+        if(!invulnerable)   // Si le joueur n'est pas invulnerable
+        {
+            playerHp --;                    // Le joueur perd un pv
+            invulnerable = true;            // Il deviens invulnerable
+            this.time.addEvent({ delay: 2000, callback: function(){invulnerable = false;}, callbackScope: this});  // Le joueur n'est plus invulnerable après 2000ms
+
+            if (playerHp > 0){  // Si le joueur est encore en vie après s'être pris le coup
+                this.time.addEvent({ delay: 200, repeat: 9, callback: function(){player.visible = !player.visible;}, callbackScope: this}); // Le joueur passe de visible a non visible toutes les 200ms 9 fois de suite
+            }
+        }
+    }
+
+    hitProjectile(player, ennemis){
+        if(!invulnerable)   // Si le joueur n'est pas invulnerable
+        {
+            playerHp --;                    // Le joueur perd un pv
+            invulnerable = true;            // Il deviens invulnerable
+            this.time.addEvent({ delay: 2000, callback: function(){invulnerable = false;}, callbackScope: this});  // Le joueur n'est plus invulnerable après 2000ms
+
+            if (playerHp > 0){  // Si le joueur est encore en vie après s'être pris le coup
+                this.time.addEvent({ delay: 200, repeat: 9, callback: function(){player.visible = !player.visible;}, callbackScope: this}); // Le joueur passe de visible a non visible toutes les 200ms 9 fois de suite
+            }
+    
+            ennemis.destroy();
+        }
     }
 
 }
