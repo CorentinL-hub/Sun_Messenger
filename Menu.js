@@ -136,7 +136,7 @@ class Menu extends Phaser.Scene {
             repeat: 0,
         });
         
-        this.scene.start('stage2')
+        this.scene.start('stage1')
     }
 
     update(){

@@ -60,7 +60,7 @@ class Stage2 extends Phaser.Scene {
 
         this.projectiles = this.physics.add.group();
 
-        this.player = this.physics.add.sprite(2430, 700, "player").setSize(12, 48).setOffset(16,20);
+        this.player = this.physics.add.sprite(100, 700, "player").setSize(12, 48).setOffset(16,20);
         this.player.setCollideWorldBounds(true);
         this.playerSpeedX = 150;
         this.playerSpeedY = 320;
