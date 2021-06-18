@@ -5,24 +5,26 @@ class Menu extends Phaser.Scene {
     }
 
     preload(){
-        this.load.atlas("player", "asset/Poti.png","asset/Poti.json")
-        this.load.atlas("cerise", "asset/Cerise.png","asset/Cerise.json")
-        this.load.atlas("poire", "asset/Poire.png","asset/Poire.json")
-        this.load.atlas("glace", "asset/Glace.png","asset/Glace.json")
+        this.load.atlas("player", "asset/Poti.png","asset/Poti.json");
+        this.load.atlas("cerise", "asset/Cerise.png","asset/Cerise.json");
+        this.load.atlas("poire", "asset/Poire.png","asset/Poire.json");
+        this.load.atlas("glace", "asset/Glace.png","asset/Glace.json");
 
-        this.load.spritesheet("manaBar", "asset/mana_bar.png", { frameWidth: 75, frameHeight: 158 })
-        this.load.spritesheet("lifeBar", "asset/life_bar.png", { frameWidth: 90, frameHeight: 154 })
-        this.load.spritesheet("legumeCounter", "asset/legumeCounter.png", { frameWidth: 171, frameHeight: 95 })
-        this.load.image("energy", "asset/energy.png")
-        this.load.image("life", "asset/life.png")
-        this.load.image("legume", "asset/legume.png")
-        this.load.image("attack", "asset/attack.png")
-        this.load.image("projectile", "asset/Projectile.png")
+        this.load.spritesheet("manaBar", "asset/mana_bar.png", { frameWidth: 75, frameHeight: 158 });
+        this.load.spritesheet("lifeBar", "asset/life_bar.png", { frameWidth: 90, frameHeight: 154 });
+        this.load.spritesheet("legumeCounter", "asset/legumeCounter.png", { frameWidth: 171, frameHeight: 95 });
+        this.load.image("energy", "asset/energy.png");
+        this.load.image("life", "asset/life.png");
+        this.load.image("legume", "asset/legume.png");
+        this.load.image("attack", "asset/attack.png");
+        this.load.image("projectile", "asset/Projectile.png");
 
         //Tiled
         this.load.image("tileset", "tiled/Tileset.png");
+        this.load.image("tileset2", "tiled/Tileset2.png");
         this.load.tilemapTiledJSON("stage1", "tiled/stage1.json");
         this.load.tilemapTiledJSON("stage2", "tiled/stage2.json");
+        this.load.tilemapTiledJSON("stage3", "tiled/stage3.json");
         this.load.image("background", "asset/Background.png")
     }
 
@@ -136,7 +138,7 @@ class Menu extends Phaser.Scene {
             repeat: 0,
         });
         
-        this.scene.start('stage1')
+        this.scene.start('stage1');
     }
 
     update(){

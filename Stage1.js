@@ -63,11 +63,10 @@ class Stage1 extends Phaser.Scene {
         this.hitbox = this.physics.add.image(this.player.x, this.player.y, 'attack').setOrigin(0, 0.5);
         this.hitbox.body.setAllowGravity(false);
 
-
         //Player
         this.physics.add.overlap(this.player, this.energy, this.getEnergy, null, this);
         this.physics.add.overlap(this.player, this.life, this.getLife, null, this);
-        this.physics.add.collider(this.player, this.legume, this.getLegume, null, this);
+        this.physics.add.overlap(this.player, this.legume, this.getLegume, null, this);
         this.physics.add.overlap(this.player, this.ennemis, this.hitEnnemi, null, this);
         this.physics.add.collider(this.player, this.collision);
         this.physics.add.collider(this.player, this.door);
@@ -77,7 +76,6 @@ class Stage1 extends Phaser.Scene {
         this.physics.add.collider(this.ennemis, this.collision);
         this.physics.add.collider(this.legume, this.collision);
         
-
         //Tilemap
         this.collision.setCollisionByProperty({collides:true});
         this.door.setCollisionByProperty({collides:true});
@@ -233,6 +231,7 @@ class Stage1 extends Phaser.Scene {
         if (inputP[4]){
             this.player.anims.play('superJump', true);
             mana = 0;
+            this.player.setVelocityY(-10);
             keyPush = "B";
         }
 

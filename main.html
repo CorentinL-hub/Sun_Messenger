@@ -7,6 +7,7 @@
     <script type="text/javascript" src= "Menu.js"></script>
     <script type="text/javascript" src= "Stage1.js"></script>
     <script type="text/javascript" src= "Stage2.js"></script>
+    <script type="text/javascript" src= "Stage3.js"></script>
     <script type="text/javascript" src= "EnnemiCerise.js"></script>
     <script type="text/javascript" src= "EnnemiPoire.js"></script>
     <script type="text/javascript" src= "EnnemiGlace.js"></script>
@@ -39,16 +40,16 @@ var yAxis = 0;  //Stick xAxys
 var config = {
     type: Phaser.AUTO,
     width: 3040,
-    height: 920,
+    height: 1080,
     physics: {
         default: 'arcade',
         arcade: {
             gravity: { y: 500 },
-            debug: true
+            debug: false
         }
     },
     input: {gamepad:true},
-    scene: [Menu, Stage1, Stage2]
+    scene: [Menu, Stage1, Stage2, Stage3]
 };
 
 var game = new Phaser.Game(config);

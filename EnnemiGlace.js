@@ -43,7 +43,6 @@ class EnnemiGlace extends Phaser.GameObjects.Sprite{
         if(Math.abs(player.body.x-this.body.x) <= 250 && player.body.y>this.body.y && this.cooldown == 0){
             this.attack = true;
             this.cooldown = 180;
-
         }
 
         if (this.direction == "left"){

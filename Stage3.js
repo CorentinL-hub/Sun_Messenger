@@ -1,9 +1,8 @@
-class Stage2 extends Phaser.Scene {
+class Stage3 extends Phaser.Scene {
     
     constructor(){
-        super("stage2");
+        super("stage3");
     }
-
 
     create(){
         this.control = this.scene.get('control');
@@ -16,51 +15,52 @@ class Stage2 extends Phaser.Scene {
             'a' : Phaser.Input.Keyboard.KeyCodes.A
         });
 
-        this.add.image(800, 450, "background").setScrollFactor(0.05, 0);
+        this.add.image(800, 450, "background").setScrollFactor(0.05,0);
+        this.map = this.make.tilemap({ key: "stage3" });
+        this.tileset = this.map.addTilesetImage("Tileset2", "tileset2");
 
-        this.map = this.make.tilemap({ key: "stage2" });
-        this.tileset = this.map.addTilesetImage("Tilesheet", "tileset");
         this.collision = this.map.createLayer("collision", this.tileset, 0, 0);
+        this.crystal = this.map.createLayer("crystal", this.tileset, 0, 0);
 
         this.manaBar = this.add.sprite(50, 300, "manaBar").setScrollFactor(0);
         this.lifeBar = this.add.sprite(50, 100, "lifeBar").setScrollFactor(0);
         this.legumeCounter = this.add.sprite(1500, 100, "legumeCounter").setScrollFactor(0);
 
         this.energy = this.physics.add.group();
-        this.energies = this.energy.create(460, 784, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(550, 624, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(640, 784, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(730, 624, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(820, 784, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(1070, 560, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(1170, 592, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(1390, 784, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(1560, 784, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(1930, 700, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(2090, 700, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(2450, 784, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(2630, 784, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(80, 624, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(208, 800, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(272, 656, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(387, 208, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(401, 528, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(527, 400, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(721, 784, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1172, 368, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1331, 464, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1459, 496, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(2349, 675, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(2448, 944, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(2576, 944, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(2607, 496, 'energy').body.setAllowGravity(false);
 
         this.life = this.physics.add.group();
-        this.lifes = this.life.create(640, 550, 'life').body.setAllowGravity(false);
-        this.lifes = this.life.create(1360, 368, 'life').body.setAllowGravity(false);
-        this.lifes = this.life.create(2540, 700, 'life').body.setAllowGravity(false);
+        this.lifes = this.life.create(176, 425, 'life').body.setAllowGravity(false);
+        this.lifes = this.life.create(756, 176, 'life').body.setAllowGravity(false);
+        this.lifes = this.life.create(1135, 912, 'life').body.setAllowGravity(false);
+        this.lifes = this.life.create(1750, 500, 'life').body.setAllowGravity(false);
 
-        this.legume = this.physics.add.image(1650, 260, 'legume');
+        this.legume = this.physics.add.image(623, 10, 'legume');
 
-        this.ennemiGlace = this.physics.add.group();
+        //Creation of ennemis
+        this.ennemis = this.physics.add.group();
+        this.cerise1 = new EnnemiCerise(this, 2349, 500, 'cerise');
+        this.cerise1.body.setSize(63, 50).setOffset(0, 20);
 
-        this.glace1 = new EnnemiGlace(this, 850, 200, 'glace');
-        this.glace1.body.setSize(63, 50).setOffset(30, 40);
-        this.glace1.body.setAllowGravity(false)
+        new EnnemiPoire(this, 754, 200, 'poire');
+        new EnnemiPoire(this, 1870, 990, 'poire');
+        new EnnemiPoire(this, 2225, 940, 'poire');
 
-        this.glace2 = new EnnemiGlace(this, 2500, 300, 'glace');
-        this.glace2.body.setSize(63, 50).setOffset(30, 40);
-        this.glace2.body.setAllowGravity(false)
-
-        this.projectiles = this.physics.add.group();
-
-        this.player = this.physics.add.sprite(100, 700, "player").setSize(12, 48).setOffset(16,20);
+        //Creation of player
+        this.player = this.physics.add.sprite(100, 975, "player").setSize(12, 48).setOffset(16,20);
         this.player.setCollideWorldBounds(true);
         this.playerSpeedX = 150;
         this.playerSpeedY = 320;
@@ -68,21 +68,25 @@ class Stage2 extends Phaser.Scene {
         this.hitbox = this.physics.add.image(this.player.x, this.player.y, 'attack').setOrigin(0, 0.5);
         this.hitbox.body.setAllowGravity(false);
 
-        this.physics.add.collider(this.player, this.collision);
-        this.physics.add.overlap(this.player, this.life, this.getLife, null, this);
+        //Player
         this.physics.add.overlap(this.player, this.energy, this.getEnergy, null, this);
+        this.physics.add.overlap(this.player, this.life, this.getLife, null, this);
         this.physics.add.overlap(this.player, this.legume, this.getLegume, null, this);
-        this.physics.add.overlap(this.player, this.projectiles, this.hitProjectile, null, this);
+        this.physics.add.overlap(this.player, this.ennemis, this.hitEnnemi, null, this);
+        this.physics.add.collider(this.player, this.collision);
+        this.physics.add.collider(this.player, this.crystal);
 
-        
-        this.physics.add.collider(this.ennemiGlace, this.collision);
+        //Ennemi
+        this.physics.add.collider(this.ennemis, this.collision);
         this.physics.add.collider(this.legume, this.collision);
-        this.physics.add.collider(this.projectiles, this.collision, this.destroy, null, this);
+        
+        //Tilemap
         this.collision.setCollisionByProperty({collides:true});
+        this.crystal.setCollisionByProperty({collides:true});
 
         this.camera = this.cameras.main.setSize(1600,900);
         this.camera.startFollow(this.player, true, 0.08, 0.08);
-        this.camera.setBounds(0, 0, 3040, 928);
+        this.camera.setBounds(0, 0, 2752, 1080);
 
         this.player.on('animationcomplete', function(){
             if(keyPush == "B"){
@@ -96,26 +100,22 @@ class Stage2 extends Phaser.Scene {
             }
         }, this);
 
-        this.collision.setTileLocationCallback(94, 23, 1, 2, ()=>{
-            this.scene.start('stage3');
+        this.collision.setTileLocationCallback(81, 11, 1, 2, ()=>{
+            this.scene.start('menu');
+            invulnerable = false;
         });
 
-        this.collision.setTileIndexCallback([47, 53],()=>{
+        this.crystal.setTileIndexCallback([81, 92],()=>{
             playerHp = 0;
         });
-
-        this.collision.setTileIndexCallback([1, 2, 3, 4, 5, 7, 8, 9, 10, 13, 14, 15, 16],()=>{
-            onIce = true;
-            timerGlace = 5;
-        });
-
         this.textJumping = this.add.text(16, 16, 'Jumping : ' + playerHp, { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
     }
 
     update(){
-        this.textJumping.setText('X : ' + this.player.body.x + ' Y : ' + this.player.body.y);
+        this.textJumping.setText('X : ' + this.player.body.x + ' Y :' + this.player.body.y);
 
         let pad = Phaser.Input.Gamepad.Gamepad;
+
     
         if(this.input.gamepad.total){   //Si une manette est connecté
             pad = this.input.gamepad.getPad(0);  //pad récupère les inputs du joueur
@@ -126,22 +126,12 @@ class Stage2 extends Phaser.Scene {
         if(playerHp <=0){
             this.camera.shake(250, 0.02);
             this.player.visible = false;
-            this.time.addEvent({ delay: 250, callback: function(){this.scene.start('stage2')
-            playerHp = 3;}, callbackScope: this});
             invulnerable = false;
-        }
-
-        if (timerGlace > 0){
-            timerGlace--
-            if(timerGlace == 0){
-                onIce = false
-            }
-        }
-
-        if (this.player.body.velocity.x > 250){
-            this.player.setVelocityX(250);
+            this.time.addEvent({ delay: 250, callback: function(){this.scene.start('stage3')
+            playerHp = 3;}, callbackScope: this});
         }
         
+
         //Logic
 
         //Position de l'attaque
@@ -198,64 +188,8 @@ class Stage2 extends Phaser.Scene {
             jumping = false;
         }
 
-        
-
 
         //Movement
-
-        if (direction == "Jump"){
-            direction = "Face"
-            this.player.setVelocityY(-650);
-            jump--;
-        }
-        
-
-        if (inputP[0]){
-            this.player.flipX = false;
-            if(onIce){
-                this.player.setAccelerationX(this.playerSpeedX);
-            }
-
-            else{
-            this.player.setVelocityX(this.playerSpeedX);
-            }
-
-        }
-        
-        else if (inputP[1]){
-            this.player.flipX = true;
-            if(onIce){
-                this.player.setAccelerationX(-this.playerSpeedX);
-            }
-
-            else{
-            this.player.setVelocityX(-this.playerSpeedX);
-            }
-        }
-
-        else {
-            if (onIce){
-                if(this.player.body.velocity.x < 0){
-                    this.player.setAccelerationX(300);
-                }
-                
-                else if(this.player.body.velocity.x > 0) {
-                    this.player.setAccelerationX(-300);
-                }
-                
-                
-                else {
-                    this.player.setVelocityX(0);
-                    this.player.setAccelerationX(0);
-                }
-            }
-
-            else {
-                this.player.setVelocityX(0);
-                this.player.setAccelerationX(0);
-            }
-
-        }
 
         if (direction == "Jump"){
             direction = "Face"
@@ -269,6 +203,24 @@ class Stage2 extends Phaser.Scene {
             direction = "Face";
         }
         
+        if (inputP[0]){
+            this.player.flipX = false;
+            this.player.setVelocityX(this.playerSpeedX);
+        }
+        
+        if (inputP[1]){
+            this.player.flipX = true;
+            this.player.setVelocityX(-this.playerSpeedX);
+        }
+
+        if (!inputP[0] && !inputP[1]){
+            this.player.setVelocityX(0);
+        }
+
+        if (inputP[0] && inputP[1]){
+            this.player.setVelocityX(0);
+        }
+
         if (inputP[3] && jump > 0){
             jump--;
             this.player.setVelocityY(-this.playerSpeedY);
@@ -278,8 +230,8 @@ class Stage2 extends Phaser.Scene {
             jump = 1;
         }
 
-        //Animation
 
+        //Animation
         if (inputP[4]){
             this.player.anims.play('superJump', true);
             mana = 0;
@@ -347,27 +299,12 @@ class Stage2 extends Phaser.Scene {
             this.manaBar.setFrame(0)
         }
 
-        for(var i = 0; i < this.ennemiGlace.getChildren().length; i++){
-            let ennemis = this.ennemiGlace.getChildren()[i];
-            if(ennemis.ia(this.player)){
-                this.projectiles.create(ennemis.x, ennemis.y+40, 'projectile')
-            }
+        //Monster's IA
+        for(var i = 0; i < this.ennemis.getChildren().length; i++){
+            let ennemis = this.ennemis.getChildren()[i];
+            ennemis.ia(this.player);
         }
 
-        for(var i = 0; i < this.projectiles.getChildren().length; i++){
-            let projectile = this.projectiles.getChildren()[i];
-
-            let radian = Math.atan2(this.player.body.y - projectile.body.y, this.player.body.x - projectile.body.x);
-            let angle =  Math.atan2(0 - projectile.body.velocity.y, 1 - projectile.body.velocity.x) * 180/Math.PI;
-
-            projectile.setVelocityX(Math.cos(radian)*150)
-            projectile.setVelocityY(200)
-            .setAngle(angle-10);
-
-            if(projectile.body.y > 835){
-                projectile.destroy();
-            }
-        }
 
     }
 
@@ -390,6 +327,7 @@ class Stage2 extends Phaser.Scene {
         this.legumeCounter.setFrame(1);
     }
 
+
     destroy(projectile, other){
         projectile.destroy();
     }
@@ -399,27 +337,14 @@ class Stage2 extends Phaser.Scene {
         {
             playerHp --;                    // Le joueur perd un pv
             invulnerable = true;            // Il deviens invulnerable
-            this.time.addEvent({ delay: 2000, callback: function(){invulnerable = false;}, callbackScope: this});  // Le joueur n'est plus invulnerable après 2000ms
+            this.timer = this.time.addEvent({ delay: 2000, callback: function(){invulnerable = false;}, callbackScope: this});  // Le joueur n'est plus invulnerable après 2000ms
 
             if (playerHp > 0){  // Si le joueur est encore en vie après s'être pris le coup
                 this.time.addEvent({ delay: 200, repeat: 9, callback: function(){player.visible = !player.visible;}, callbackScope: this}); // Le joueur passe de visible a non visible toutes les 200ms 9 fois de suite
             }
+
         }
     }
 
-    hitProjectile(player, ennemis){
-        if(!invulnerable)   // Si le joueur n'est pas invulnerable
-        {
-            playerHp --;                    // Le joueur perd un pv
-            invulnerable = true;            // Il deviens invulnerable
-            this.time.addEvent({ delay: 2000, callback: function(){invulnerable = false;}, callbackScope: this});  // Le joueur n'est plus invulnerable après 2000ms
-
-            if (playerHp > 0){  // Si le joueur est encore en vie après s'être pris le coup
-                this.time.addEvent({ delay: 200, repeat: 9, callback: function(){player.visible = !player.visible;}, callbackScope: this}); // Le joueur passe de visible a non visible toutes les 200ms 9 fois de suite
-            }
-    
-            ennemis.destroy();
-        }
-    }
-
+  
 }
