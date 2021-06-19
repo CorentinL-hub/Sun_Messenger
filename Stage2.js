@@ -109,11 +109,9 @@ class Stage2 extends Phaser.Scene {
             timerGlace = 5;
         });
 
-        this.textJumping = this.add.text(16, 16, 'Jumping : ' + playerHp, { fontSize: '32px', fill: '#000' }).setScrollFactor(0);
     }
 
     update(){
-        this.textJumping.setText('X : ' + this.player.body.x + ' Y : ' + this.player.body.y);
 
         let pad = Phaser.Input.Gamepad.Gamepad;
     
