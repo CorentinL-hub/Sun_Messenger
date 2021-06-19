@@ -16,7 +16,7 @@ class Menu extends Phaser.Scene {
         this.load.image("energy", "asset/energy.png");
         this.load.image("life", "asset/life.png");
         this.load.image("legume", "asset/legume.png");
-        this.load.image("attack", "asset/attack.png");
+        this.load.image("attack", "asset/Attack.png");
         this.load.image("projectile", "asset/Projectile.png");
 
         //Tiled
@@ -24,7 +24,7 @@ class Menu extends Phaser.Scene {
         this.load.image("tileset2", "tiled/Tileset2.png");
         this.load.tilemapTiledJSON("stage1", "tiled/stage1.json");
         this.load.tilemapTiledJSON("stage2", "tiled/stage2.json");
-        this.load.tilemapTiledJSON("stage3", "tiled/stage3.json");
+        this.load.tilemapTiledJSON("stage3", "tiled/Stage3.json");
         this.load.image("background", "asset/Background.png")
     }
 
