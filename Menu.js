@@ -18,6 +18,14 @@ class Menu extends Phaser.Scene {
         this.load.image("legume", "asset/legume.png");
         this.load.image("attack", "asset/Attack.png");
         this.load.image("projectile", "asset/Projectile.png");
+        this.load.image("background", "asset/Background.png");
+        this.load.image("fraise", "asset/Fraise.png");
+        this.load.image("ecranFin", "asset/Ecran_fin.png");
+        this.load.image("menu", "asset/Menu.png");
+        this.load.image("playButton", "asset/playButton.png");
+        this.load.image("quitButton", "asset/quitButton.png");
+        this.load.image("aide", "asset/Aide.png");
+
 
         //Tiled
         this.load.image("tileset", "tiled/Tileset.png");
@@ -25,7 +33,6 @@ class Menu extends Phaser.Scene {
         this.load.tilemapTiledJSON("stage1", "tiled/stage1.json");
         this.load.tilemapTiledJSON("stage2", "tiled/stage2.json");
         this.load.tilemapTiledJSON("stage3", "tiled/Stage3.json");
-        this.load.image("background", "asset/Background.png")
     }
 
     create(){
@@ -137,9 +144,27 @@ class Menu extends Phaser.Scene {
             frameRate: 1,
             repeat: 0,
         });
-        
-        this.scene.start('stage1');
+
+        this.add.image(800, 450, 'menu');
+
+        let playButton = this.add.image(811, 312, 'playButton');
+        playButton.setInteractive();
+
+        let quitButton = this.add.image(811, 430, 'quitButton');
+        quitButton.setInteractive();
+
+
+        playButton.on("pointerup", () => {
+            this.scene.start('stage1');
+
+        });
+
+
+        quitButton.on("pointerup", () => {
+            this.scene.remove()
+         })
     }
+    
 
     update(){
 

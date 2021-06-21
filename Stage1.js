@@ -7,10 +7,15 @@ class Stage1 extends Phaser.Scene {
     create(){
         this.control = this.scene.get('control');
 
-        this.cursors = this.input.keyboard.addKeys({ 'up': Phaser.Input.Keyboard.KeyCodes.UP,
-            'down': Phaser.Input.Keyboard.KeyCodes.DOWN, 
-            'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
-            'right': Phaser.Input.Keyboard.KeyCodes.RIGHT,
+        this.cursors = this.input.keyboard.addKeys({ 
+            'up': Phaser.Input.Keyboard.KeyCodes.Z,
+            'down': Phaser.Input.Keyboard.KeyCodes.S, 
+            'left': Phaser.Input.Keyboard.KeyCodes.Q,
+            'right': Phaser.Input.Keyboard.KeyCodes.D,
+            'upd': Phaser.Input.Keyboard.KeyCodes.UP,
+            'downd': Phaser.Input.Keyboard.KeyCodes.DOWN, 
+            'leftd': Phaser.Input.Keyboard.KeyCodes.LEFT,
+            'rightd': Phaser.Input.Keyboard.KeyCodes.RIGHT,
             'space' : Phaser.Input.Keyboard.KeyCodes.SPACE,
             'a' : Phaser.Input.Keyboard.KeyCodes.A
         });
@@ -29,21 +34,22 @@ class Stage1 extends Phaser.Scene {
         this.legumeCounter = this.add.sprite(1500, 100, "legumeCounter").setScrollFactor(0);
 
         this.energy = this.physics.add.group();
-        this.energies = this.energy.create(624, 725, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(688, 690, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(945, 784, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(1489, 688, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(1650, 720, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(1808, 624, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(1968, 720, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(2640, 720, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(2800, 624, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(332, 784, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(656, 725, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(720, 690, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(977, 784, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1521, 688, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1682, 720, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1840, 820, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(2000, 720, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(2672, 720, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(2832, 624, 'energy').body.setAllowGravity(false);
         
 
         this.life = this.physics.add.group();
-        this.lifes = this.life.create(1248, 695, 'life').body.setAllowGravity(false);
-        this.lifes = this.life.create(1818, 820, 'life').body.setAllowGravity(false);
-        this.lifes = this.life.create(2736, 688, 'life').body.setAllowGravity(false);
+        this.lifes = this.life.create(1280, 695, 'life').body.setAllowGravity(false);
+        this.lifes = this.life.create(1840, 624, 'life').body.setAllowGravity(false);
+        this.lifes = this.life.create(2768, 688, 'life').body.setAllowGravity(false);
 
         this.legume = this.physics.add.image(3000, 490, 'legume');
         
@@ -55,8 +61,7 @@ class Stage1 extends Phaser.Scene {
         new EnnemiPoire(this, 1850, 800, 'poire');
 
         //Creation of player
-        this.player = this.physics.add.sprite(100, 790, "player").setSize(12, 48).setOffset(16,20);
-        this.player.setCollideWorldBounds(true);
+        this.player = this.physics.add.sprite(100, 800, "player").setSize(12, 48).setOffset(16,20);
         this.playerSpeedX = 150;
         this.playerSpeedY = 320;
 
@@ -80,32 +85,35 @@ class Stage1 extends Phaser.Scene {
         this.collision.setCollisionByProperty({collides:true});
         this.door.setCollisionByProperty({collides:true});
 
-        this.camera = this.cameras.main.setSize(1600,900);
-        this.camera.startFollow(this.player, true, 0.08, 0.08);
-        this.camera.setBounds(0, 0, 3040, 928);
+        this.camera = this.cameras.main.setSize(1600,900)
+        .startFollow(this.player, true, 0.08, 0.08)
+        .setBounds(32, 0, 3040, 928);
+        
 
         this.player.on('animationcomplete', function(){
             if(keyPush == "B"){
                 direction = "Jump";
                 inputP[4] = false;
+                mana = 0;
             }
 
             if(keyPush == "X"){
                 direction = "Laser";
                 inputP[5] = false;
+                mana = 0;
             }
         }, this);
 
-        this.collision.setTileLocationCallback(94, 18, 1, 2, ()=>{
+        this.collision.setTileLocationCallback(95, 18, 1, 2, ()=>{
             this.scene.start('stage2');
             invulnerable = false;
 
         });
 
-        this.door.setTileLocationCallback(93, 18, 1, 2, ()=>{
+        this.door.setTileLocationCallback(94, 18, 1, 2, ()=>{
             if(attack){
-                this.door.removeTileAt(93, 18);
-                this.door.removeTileAt(93, 19);
+                this.door.removeTileAt(94, 18);
+                this.door.removeTileAt(94, 19);
             }
         });
     }
@@ -149,15 +157,14 @@ class Stage1 extends Phaser.Scene {
             this.hitbox.y = -100;
         }
 
-
         //Le joueur appuie sur Droite(Clavier) ou pad Droite/stick vers la Droite(Manette)
-        inputP[0] = this.cursors.right.isDown || pad.right || xAxis > 0.4 ? true : false;
+        inputP[0] = this.cursors.right.isDown || this.cursors.rightd.isDown || pad.right || xAxis > 0.4 ? true : false;
 
         //Le joueur appuie sur Gauche(Clavier) ou pad gauche/stick vers la Gauche(Manette)
-        inputP[1] = this.cursors.left.isDown || pad.left || xAxis < -0.4 ? true : false;
+        inputP[1] = this.cursors.left.isDown || this.cursors.leftd.isDown || pad.left || xAxis < -0.4 ? true : false;
 
         //Le joueur appuie sur Bas(Clavier) ou pad Bas/stick vers la Bas(Manette)
-        inputP[2] = this.cursors.down.isDown || pad.down || yAxis > 0.5 ? true : false;
+        inputP[2] = this.cursors.down.isDown || this.cursors.downd.isDown || pad.down || yAxis > 0.5 ? true : false;
 
         //Le joueur appuie sur Haut(Clavier) ou pad Haut/stick vers la Haut(Manette)
         if (this.cursors.space.isDown || pad.b){
@@ -172,7 +179,7 @@ class Stage1 extends Phaser.Scene {
             }
         }
         
-        if (this.cursors.up.isDown || pad.up || yAxis < -0.5){
+        if (this.cursors.up.isDown || this.cursors.upd.isDown || pad.up || yAxis < -0.5){
             if(!jumping && jump>0){
                 inputP[3] = true;
                 jumping = true;
@@ -222,7 +229,7 @@ class Stage1 extends Phaser.Scene {
             this.player.setVelocityY(-this.playerSpeedY);
         }
 
-        if(this.player.body.velocity.y == 0){
+        if(this.player.body.blocked.down){
             jump = 1;
         }
 
@@ -230,7 +237,6 @@ class Stage1 extends Phaser.Scene {
         //Animation
         if (inputP[4]){
             this.player.anims.play('superJump', true);
-            mana = 0;
             this.player.setVelocityY(-10);
             keyPush = "B";
         }
@@ -239,7 +245,6 @@ class Stage1 extends Phaser.Scene {
             this.player.setVelocityX(0);
             this.player.setVelocityY(-10);
             this.player.anims.play('laser', true);
-            mana = 0;
             keyPush = "X";
         }
 

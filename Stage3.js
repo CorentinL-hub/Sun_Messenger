@@ -7,10 +7,15 @@ class Stage3 extends Phaser.Scene {
     create(){
         this.control = this.scene.get('control');
 
-        this.cursors = this.input.keyboard.addKeys({ 'up': Phaser.Input.Keyboard.KeyCodes.UP,
-            'down': Phaser.Input.Keyboard.KeyCodes.DOWN, 
-            'left': Phaser.Input.Keyboard.KeyCodes.LEFT,
-            'right': Phaser.Input.Keyboard.KeyCodes.RIGHT,
+        this.cursors = this.input.keyboard.addKeys({ 
+            'up': Phaser.Input.Keyboard.KeyCodes.Z,
+            'down': Phaser.Input.Keyboard.KeyCodes.S, 
+            'left': Phaser.Input.Keyboard.KeyCodes.Q,
+            'right': Phaser.Input.Keyboard.KeyCodes.D,
+            'upd': Phaser.Input.Keyboard.KeyCodes.UP,
+            'downd': Phaser.Input.Keyboard.KeyCodes.DOWN, 
+            'leftd': Phaser.Input.Keyboard.KeyCodes.LEFT,
+            'rightd': Phaser.Input.Keyboard.KeyCodes.RIGHT,
             'space' : Phaser.Input.Keyboard.KeyCodes.SPACE,
             'a' : Phaser.Input.Keyboard.KeyCodes.A
         });
@@ -27,41 +32,41 @@ class Stage3 extends Phaser.Scene {
         this.legumeCounter = this.add.sprite(1500, 100, "legumeCounter").setScrollFactor(0);
 
         this.energy = this.physics.add.group();
-        this.energies = this.energy.create(80, 624, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(208, 800, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(272, 656, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(387, 208, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(401, 528, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(527, 400, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(721, 784, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(1172, 368, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(1331, 464, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(1459, 496, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(2349, 675, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(2448, 944, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(2576, 944, 'energy').body.setAllowGravity(false);
-        this.energies = this.energy.create(2607, 496, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(112, 688, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(240, 864, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(304, 720, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(419, 272, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(433, 572, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(559, 464, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(753, 848, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1200, 432, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1363, 528, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(1491, 560, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(2381, 739, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(2480, 1008, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(2608, 1008, 'energy').body.setAllowGravity(false);
+        this.energies = this.energy.create(2639, 560, 'energy').body.setAllowGravity(false);
 
         this.life = this.physics.add.group();
-        this.lifes = this.life.create(176, 425, 'life').body.setAllowGravity(false);
-        this.lifes = this.life.create(756, 176, 'life').body.setAllowGravity(false);
-        this.lifes = this.life.create(1135, 912, 'life').body.setAllowGravity(false);
-        this.lifes = this.life.create(1750, 500, 'life').body.setAllowGravity(false);
+        this.lifes = this.life.create(208, 489, 'life').body.setAllowGravity(false);
+        this.lifes = this.life.create(788, 240, 'life').body.setAllowGravity(false);
+        this.lifes = this.life.create(1167, 976, 'life').body.setAllowGravity(false);
+        this.lifes = this.life.create(1782, 564, 'life').body.setAllowGravity(false);
 
-        this.legume = this.physics.add.image(623, 10, 'legume');
+        this.legume = this.physics.add.image(655, 10, 'legume');
+        this.fraise = this.physics.add.image(2640, 300, 'fraise');
 
         //Creation of ennemis
         this.ennemis = this.physics.add.group();
-        this.cerise1 = new EnnemiCerise(this, 2349, 500, 'cerise');
+        this.cerise1 = new EnnemiCerise(this, 2382, 500, 'cerise');
         this.cerise1.body.setSize(63, 50).setOffset(0, 20);
 
-        new EnnemiPoire(this, 754, 200, 'poire');
-        new EnnemiPoire(this, 1870, 990, 'poire');
-        new EnnemiPoire(this, 2225, 940, 'poire');
+        new EnnemiPoire(this, 786, 240, 'poire');
+        new EnnemiPoire(this, 1902, 990, 'poire');
+        new EnnemiPoire(this, 2257, 940, 'poire');
 
         //Creation of player
-        this.player = this.physics.add.sprite(100, 975, "player").setSize(12, 48).setOffset(16,20);
-        this.player.setCollideWorldBounds(true);
+        this.player = this.physics.add.sprite(100, 1045, "player").setSize(12, 48).setOffset(16,20);
         this.playerSpeedX = 150;
         this.playerSpeedY = 320;
 
@@ -72,13 +77,17 @@ class Stage3 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.energy, this.getEnergy, null, this);
         this.physics.add.overlap(this.player, this.life, this.getLife, null, this);
         this.physics.add.overlap(this.player, this.legume, this.getLegume, null, this);
+        this.physics.add.overlap(this.player, this.fraise, this.getFraise, null, this);
         this.physics.add.overlap(this.player, this.ennemis, this.hitEnnemi, null, this);
         this.physics.add.collider(this.player, this.collision);
         this.physics.add.collider(this.player, this.crystal);
 
         //Ennemi
         this.physics.add.collider(this.ennemis, this.collision);
+
+        //Object
         this.physics.add.collider(this.legume, this.collision);
+        this.physics.add.collider(this.fraise, this.collision);
         
         //Tilemap
         this.collision.setCollisionByProperty({collides:true});
@@ -86,24 +95,21 @@ class Stage3 extends Phaser.Scene {
 
         this.camera = this.cameras.main.setSize(1600,900);
         this.camera.startFollow(this.player, true, 0.08, 0.08);
-        this.camera.setBounds(0, 0, 2752, 1080);
+        this.camera.setBounds(32, 0, 2752, 1144);
 
         this.player.on('animationcomplete', function(){
             if(keyPush == "B"){
                 direction = "Jump";
                 inputP[4] = false;
+                mana = 0;
             }
 
             if(keyPush == "X"){
                 direction = "Laser";
                 inputP[5] = false;
+                mana = 0;
             }
         }, this);
-
-        this.collision.setTileLocationCallback(81, 11, 1, 2, ()=>{
-            this.scene.start('menu');
-            invulnerable = false;
-        });
 
         this.crystal.setTileIndexCallback([81, 92],()=>{
             playerHp = 0;
@@ -224,7 +230,7 @@ class Stage3 extends Phaser.Scene {
             this.player.setVelocityY(-this.playerSpeedY);
         }
 
-        if(this.player.body.velocity.y == 0){
+        if(this.player.body.blocked.down){
             jump = 1;
         }
 
@@ -232,7 +238,6 @@ class Stage3 extends Phaser.Scene {
         //Animation
         if (inputP[4]){
             this.player.anims.play('superJump', true);
-            mana = 0;
             this.player.setVelocityY(-10);
             keyPush = "B";
         }
@@ -241,7 +246,6 @@ class Stage3 extends Phaser.Scene {
             this.player.setVelocityX(0);
             this.player.setVelocityY(-10);
             this.player.anims.play('laser', true);
-            mana = 0;
             keyPush = "X";
         }
 
@@ -323,6 +327,11 @@ class Stage3 extends Phaser.Scene {
     getLegume(player, legume){
         legume.destroy();
         this.legumeCounter.setFrame(1);
+    }
+
+    getFraise(player, fraise){
+        fraise.destroy();
+        this.scene.start('sceneFin');
     }
 
 
