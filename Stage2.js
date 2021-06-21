@@ -51,7 +51,7 @@ class Stage2 extends Phaser.Scene {
         this.lifes = this.life.create(1392, 368, 'life').body.setAllowGravity(false);
         this.lifes = this.life.create(2572, 700, 'life').body.setAllowGravity(false);
 
-        this.legume = this.physics.add.image(1650, 260, 'legume');
+        this.legume = this.physics.add.image(1660, 260, 'legume');
 
         this.ennemiGlace = this.physics.add.group();
 
@@ -203,8 +203,6 @@ class Stage2 extends Phaser.Scene {
         }
 
         
-
-
         //Movement
 
         if (direction == "Jump"){

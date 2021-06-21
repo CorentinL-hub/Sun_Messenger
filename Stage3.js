@@ -159,13 +159,13 @@ class Stage3 extends Phaser.Scene {
 
 
         //Le joueur appuie sur Droite(Clavier) ou pad Droite/stick vers la Droite(Manette)
-        inputP[0] = this.cursors.right.isDown || pad.right || xAxis > 0.4 ? true : false;
+        inputP[0] = this.cursors.right.isDown || this.cursors.rightd.isDown || pad.right || xAxis > 0.4 ? true : false;
 
         //Le joueur appuie sur Gauche(Clavier) ou pad gauche/stick vers la Gauche(Manette)
-        inputP[1] = this.cursors.left.isDown || pad.left || xAxis < -0.4 ? true : false;
+        inputP[1] = this.cursors.left.isDown || this.cursors.leftd.isDown || pad.left || xAxis < -0.4 ? true : false;
 
         //Le joueur appuie sur Bas(Clavier) ou pad Bas/stick vers la Bas(Manette)
-        inputP[2] = this.cursors.down.isDown || pad.down || yAxis > 0.5 ? true : false;
+        inputP[2] = this.cursors.down.isDown || this.cursors.downd.isDown || pad.down || yAxis > 0.5 ? true : false;
 
         //Le joueur appuie sur Haut(Clavier) ou pad Haut/stick vers la Haut(Manette)
         if (this.cursors.space.isDown || pad.b){
@@ -180,7 +180,7 @@ class Stage3 extends Phaser.Scene {
             }
         }
         
-        if (this.cursors.up.isDown || pad.up || yAxis < -0.5){
+        if (this.cursors.up.isDown || this.cursors.upd.isDown || pad.up || yAxis < -0.5){
             if(!jumping && jump>0){
                 inputP[3] = true;
                 jumping = true;

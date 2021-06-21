@@ -28,6 +28,7 @@ class Stage1 extends Phaser.Scene {
         this.collision = this.map.createLayer("collision", this.tileset, 0, 0);
         this.door = this.map.createLayer("door", this.tileset, 0, 0);
 
+        this.add.image(250, 600, 'aide');
 
         this.manaBar = this.add.sprite(50, 300, "manaBar").setScrollFactor(0);
         this.lifeBar = this.add.sprite(50, 100, "lifeBar").setScrollFactor(0);
